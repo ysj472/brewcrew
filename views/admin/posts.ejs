@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/style/admin.css">
+<h2>게시글 관리</h2>
+<div class="admin-container">
+  <table border="1" cellspacing="0" cellpadding="8">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>게시판</th>
+        <th>카테고리</th>
+        <th>작성일</th>
+        <th>삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% posts.forEach(post => { %>
+        <tr>
+          <td data-label="ID"><%= post.id %></td>
+          <td data-label="제목"><a href="/boardDetail?id=<%= post.id %>"><%= post.title %></a></td>
+          <td data-label="작성자"><%= post.brewers_nickname %></td>
+          <td data-label="게시판"><%= post.board %></td>
+          <td data-label="카테고리"><%= post.category %></td>
+          <td data-label="작성일"><%= post.created_at.toLocaleString() %></td>
+          <td data-label="삭제">
+            <form action="/admin/posts/delete" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+              <input type="hidden" name="id" value="<%= post.id %>">
+              <button type="submit">삭제</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <!-- 페이지네이션 -->
+  <div class="pagination">
+    <% if (page > 1) { %>
+      <a href="?page=<%= page - 1 %>">이전</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="?page=<%= i %>" class="<%= i === page ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+
+    <% if (page < totalPages) { %>
+      <a href="?page=<%= page + 1 %>">다음</a>
+    <% } %>
+  </div>
+</div>
+<%- include('../partials/footer') %>

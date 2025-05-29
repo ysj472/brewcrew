@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/style/message.css"> 
+<div id="messages">
+    <!-- 나의 쪽지함 -->
+    <div id="messages-container">
+        <h3>나의 쪽지함</h3>
+        <table class="messages-table">
+            <thead>
+                <tr>
+                    <th>보낸사람</th>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (messages.length > 0) { %>
+                  <% messages.forEach(message => { %>
+                    <tr class="clickable-row" data-href="/messageDetail?id=<%= message.id %>">
+                      <td data-label="보낸사람"><%= message.sender_nickname %></td>
+                      <td data-label="제목"><a href="/messageDetail?id=<%= message.id %>"><%= message.title %></a></td>
+                      <td data-label="내용"><a href="/messageDetail?id=<%= message.id %>"><%= message.title %><%= message.message.length > 20 ? message.message.substring(0, 20) + '...' : message.message %></a></td>
+                      <td data-label="작성일"><%= new Date(message.created_at).toLocaleString('ko-KR', { hour12: false }) %></td>
+                    </tr>
+                  <% }) %>
+                <% } else { %>
+                  <tr><td colspan="4">받은 쪽지가 없습니다.</td></tr>
+                <% } %>
+              </tbody>              
+        </table>
+      </div>
+    </div>
+    <% if (totalPages >= 1) { %>
+      <div class="pagination" style="text-align: center; margin-top: 20px;">
+        <% if (page > 1) { %>
+          <a href="/message?page=<%= page - 1 %>">&lt; 이전</a>
+        <% } %>
+    
+        <% for (let i = 1; i <= totalPages; i++) { %>
+          <a href="/message?page=<%= i %>" class="<%= page === i ? 'active' : '' %>"><%= i %></a>
+        <% } %>
+    
+        <% if (page < totalPages) { %>
+          <a href="/message?page=<%= page + 1 %>">다음 &gt;</a>
+        <% } %>
+      </div>
+    <% } %>        
+<%- include('partials/footer') %>
+<script src="/js/page.js"></script>

@@ -1,0 +1,195 @@
+
+create database brewers;
+use brewers;
+
+CREATE TABLE brewers_register (
+    brewers_id VARCHAR(50) PRIMARY KEY,  -- 아이디를 기본키(PK)로 설정
+    brewers_nickname VARCHAR(50) UNIQUE NOT NULL,
+    brewers_pw VARCHAR(255) NOT NULL,
+    brewers_profile_pic VARCHAR(255) DEFAULT NULL,
+    brewers_created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+select * from brewers_register;
+select * from brewers_register where brewers_id = 'asd123';
+SELECT LENGTH(brewers_id), brewers_id FROM brewers_register;
+
+-- 게시판 테이블
+CREATE TABLE brewers_posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    board ENUM('news', 'discussion', 'events') NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,                         
+    brewers_id VARCHAR(50) NOT NULL,              
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+    views INT DEFAULT 0,                           
+    FOREIGN KEY (brewers_id) REFERENCES brewers_register(brewers_id) ON DELETE CASCADE
+);
+
+DELETE FROM brewers_posts;
+TRUNCATE TABLE brewers_posts;
+
+select * from brewers_posts;
+
+SELECT id, board, category, title FROM brewers_posts ORDER BY created_at DESC LIMIT 5;
+SELECT id, board, category, title FROM brewers_posts ORDER BY id DESC LIMIT 5;
+
+
+
+ALTER TABLE brewers_posts MODIFY board ENUM('밀워키게시판', '타팀게시판', '자유게시판') NOT NULL;
+SET SQL_SAFE_UPDATES = 0;
+
+ALTER TABLE brewers_posts ADD COLUMN updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+
+-- 게시판 파일 별도 저장 테이블
+CREATE TABLE brewers_files (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,                       -- 게시글 ID (FK)
+    file_path VARCHAR(255) NOT NULL,            -- 파일 경로
+    file_type ENUM('image', 'video') NOT NULL,  -- 파일 타입 (image 또는 video)
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES brewers_posts(id) ON DELETE CASCADE
+);
+
+-- 첨부파일
+select * from brewers_files;
+
+CREATE TABLE brewers_comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,             -- 댓글 고유 ID
+    post_id INT NOT NULL,                          -- 댓글이 달린 게시글 ID (FK)
+    brewers_id VARCHAR(50) NOT NULL,               -- 댓글 작성자 ID (FK)
+    content TEXT NOT NULL,                         -- 댓글 내용
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- 댓글 작성일
+    FOREIGN KEY (post_id) REFERENCES brewers_posts(id) ON DELETE CASCADE,
+    FOREIGN KEY (brewers_id) REFERENCES brewers_register(brewers_id) ON DELETE CASCADE
+);
+
+ALTER TABLE brewers_comments ADD COLUMN ip VARCHAR(45) DEFAULT NULL;
+
+-- 댓글
+select * from brewers_comments;
+
+ALTER TABLE brewers_posts MODIFY content LONGTEXT;
+
+drop table brewers_posts;
+
+-- 게시글
+select * from brewers_posts;
+
+-- 게시글, 댓글 추천 비추천
+CREATE TABLE brewers_likes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT,                                   -- 게시글 ID (nullable)
+    comment_id INT,                                -- 댓글 ID (nullable)
+    brewers_id VARCHAR(50) NOT NULL,               -- 좋아요를 누른 유저 ID
+    is_like BOOLEAN DEFAULT TRUE,                  -- TRUE = 추천, FALSE = 비추천
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES brewers_posts(id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES brewers_comments(id) ON DELETE CASCADE,
+    FOREIGN KEY (brewers_id) REFERENCES brewers_register(brewers_id) ON DELETE CASCADE
+);
+
+
+drop table brewers_likes;
+
+
+CREATE TABLE brewers_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id VARCHAR(50) NOT NULL,         -- 보낸 사람 ID (FK)
+    receiver_id VARCHAR(50) NOT NULL,       -- 받는 사람 ID (FK)
+    title VARCHAR(255) NOT NULL,             -- 쪽지 제목
+    message TEXT NOT NULL,                   -- 쪽지 본문
+    is_read TINYINT(1) DEFAULT 0,            -- 읽음 여부 (0: 안읽음, 1: 읽음)
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- 보낸 시간
+    FOREIGN KEY (sender_id) REFERENCES brewers_register(brewers_id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES brewers_register(brewers_id) ON DELETE CASCADE
+);
+
+-- 쪽지
+select * from brewers_messages;
+
+select * from brewers_likes;
+
+-- 외래키 제약 조건 비활성화
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- 테이블 데이터 삭제
+TRUNCATE TABLE brewers_likes;
+TRUNCATE TABLE brewers_comments;
+TRUNCATE TABLE brewers_files;
+TRUNCATE TABLE brewers_posts;
+TRUNCATE TABLE brewers_messages;
+TRUNCATE TABLE brewers_register;
+
+-- 외래키 제약 조건 활성화
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- 데이터 삭제
+DELETE FROM brewers_likes;
+DELETE FROM brewers_comments;
+DELETE FROM brewers_files;
+DELETE FROM brewers_posts;
+DELETE FROM brewers_messages;
+DELETE FROM brewers_register;
+
+-- Safe Update Mode 비활성화
+SET SQL_SAFE_UPDATES = 0;
+
+-- 데이터 삭제
+DELETE FROM brewers_posts;
+
+-- Safe Update Mode 다시 활성화
+SET SQL_SAFE_UPDATES = 1;
+
+-- 관리자 기능
+ALTER TABLE brewers_register ADD brewers_role ENUM('user', 'manager', 'admin') DEFAULT 'user';
+
+-- 관리자 권한 부여
+UPDATE brewers_register 
+SET brewers_role = 'admin' 
+WHERE brewers_id = 'hudson21';
+
+-- 게시판 공지 항목 추가
+ALTER TABLE brewers_posts MODIFY board ENUM('밀워키게시판', '타팀게시판', '자유게시판', '공지') NOT NULL;
+
+-- 회원 정지
+ALTER TABLE brewers_register ADD is_suspended TINYINT(1) DEFAULT 0;
+
+-- 신고
+CREATE TABLE brewers_reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    target_type ENUM('post', 'comment') NOT NULL,
+    target_id INT NOT NULL,
+    reason VARCHAR(255) NOT NULL,
+    reporter_id VARCHAR(50) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (reporter_id) REFERENCES brewers_register(brewers_id) ON DELETE CASCADE
+);
+
+-- hudson21 계정이 정말 admin인지
+SELECT brewers_id, brewers_role FROM brewers_register WHERE brewers_id = 'hudson21';
+
+-- 관리자 권한 부여
+UPDATE brewers_register 
+SET brewers_role = 'admin' 
+WHERE brewers_id = 'hudson21';
+
+-- 쪽지나 댓글 확인 여부
+ALTER TABLE brewers_comments ADD COLUMN is_checked TINYINT(1) DEFAULT 0;
+
+
+-- ip별 회원가입 제한
+CREATE TABLE brewers_ip_registers (
+    ip_address VARCHAR(45) PRIMARY KEY,
+    signup_count INT DEFAULT 1,
+    last_signup DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- IP당 등록된 계정 수 확인
+SELECT * FROM brewers_ip_registers;
+
+-- 특정 IP 계정 제한이 걸렸는지 확인
+SELECT signup_count FROM brewers_ip_registers WHERE ip_address = '127.0.0.1';

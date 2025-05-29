@@ -1,0 +1,97 @@
+
+<%- include('partials/header') %>
+<div class="main-container">
+    <!-- 최신글 섹션 -->
+    <div class="latest-news">
+        <%
+            const visualPosts = latestPosts.filter(p =>
+                (p.thumbnail || p.thumbnail_video) && p.board !== '공지'
+            );
+        %>
+            <% if (visualPosts.length > 0) { %>
+            <div class="top-news clickable-card" data-href="/boardDetail?id=<%= visualPosts[0].id %>">
+                <img 
+                src="<%= visualPosts[0].thumbnail || getVideoThumbnail(visualPosts[0].thumbnail_video) || '/img/default.jpg' %>" 
+                alt="썸네일">
+                <div class="news-content">
+                <h1><a href="/boardDetail?id=<%= visualPosts[0].id %>"><%= visualPosts[0].title %></a></h1>
+                <p><%= visualPosts[0].summary %>...</p>
+                <span>🕒 <%= visualPosts[0].brewers_nickname %></span>
+                </div>
+            </div>
+
+            <div class="small-news-grid">
+                <% visualPosts.slice(1).forEach(post => { %>
+                <div class="small-news clickable-card" data-href="/boardDetail?id=<%= post.id %>">
+                    <img 
+                    src="<%= post.thumbnail || getVideoThumbnail(post.thumbnail_video) || '/img/default.jpg' %>" 
+                    alt="썸네일">
+                    <div>
+                    <h3><a href="/boardDetail?id=<%= post.id %>"><%= post.title %></a></h3>
+                    <p><%= post.content.replace(/(<([^>]+)>)/gi, "").slice(0, 50) %>...</p>
+                    <span>🕒 <%= post.brewers_nickname %></span>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            <% } else { %>
+            <p>게시글이 없습니다.</p>
+            <% } %>
+
+      </div>      
+
+    <!-- 사이드바 -->
+    <div class="popular">
+        <!-- 인기 게시글 -->
+        <div class="popular-posts">
+            <h3>인기 게시글</h3>
+            <ul>
+            <% if (popularPosts && popularPosts.length > 0) { %>
+                <% popularPosts.filter(p => p.board !== '공지').forEach((post, index) => { %>
+                <li>
+                    <span class="rank"><%= index + 1 %></span>
+                    <a href="/boardDetail?id=<%= post.id %>"><%= post.title %></a>
+                </li>
+                <% }); %>
+            <% } else { %>
+                <li>인기 게시글이 없습니다.</li>
+            <% } %>
+            </ul>
+        </div>
+    
+        <!-- 최신 게시글 -->
+        <div class="latest-posts">
+            <h3>최신 게시글</h3>
+            <ul>
+                <% if (latestPosts && latestPosts.length > 0) { %>
+                <% latestPosts.filter(p => p.board !== '공지').forEach((post, index) => { %>
+                    <li>
+                    <span class="rank"><%= index + 1 %></span>
+                    <a href="/boardDetail?id=<%= post.id %>"><%= post.title %></a>
+                    </li>
+                <% }); %>
+                <% } else { %>
+                <li>최신 게시글이 없습니다.</li>
+                <% } %>
+            </ul>
+        </div>
+        <!-- 최다 조회수 -->
+        <div class="see-posts">
+            <h3>최다 조회수</h3>
+            <ul>
+            <% if (mostViewedPosts && mostViewedPosts.length > 0) { %>
+                <% mostViewedPosts.filter(p => p.board !== '공지').forEach((post, index) => { %>
+                <li>
+                    <span class="rank"><%= index + 1 %></span>
+                    <a href="/boardDetail?id=<%= post.id %>"><%= post.title %></a>
+                </li>
+                <% }); %>
+            <% } else { %>
+                <li>조회수 많은 게시글이 없습니다.</li>
+            <% } %>
+            </ul>
+        </div>
+    </div>    
+</div>
+<%- include('partials/footer') %>
+<script src="/js/page.js"></script>

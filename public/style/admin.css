@@ -1,0 +1,249 @@
+/* public/style/admin.css */
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 30px;
+  color: #333;
+}
+
+#title {
+    height: 40px;
+}
+
+.admin-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.admin-menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.admin-menu li a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #12284b;
+  padding: 10px 20px;
+  border: 2px solid #12284b;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.admin-menu li a:hover {
+  background-color: #12284b;
+  color: #fff;
+}
+
+table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+td form {
+  margin: 0;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e74c3c;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+button:hover {
+  background-color: #c0392b;
+}
+
+select {
+  padding: 4px;
+  font-size: 13px;
+}
+
+form button[type="submit"] {
+  margin-left: 5px;
+  background-color: #12284b;
+}
+
+form button[type="submit"]:hover {
+  background-color: #12284b;
+}
+
+form[action*="suspend"] button {
+  background-color: #ffc52f;
+}
+
+form[action*="suspend"] button:hover {
+  background-color: #ffc52f;
+}
+
+form[action*="promote"] select {
+  margin-right: 5px;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 0 4px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  color: #12284c;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.pagination a.active {
+  background-color: #12284c;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  /* 컨테이너 및 제목 */
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .admin-container h2 {
+    font-size: 1.5rem;
+  }
+
+  /* 관리자 메뉴 */
+  .admin-menu {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .admin-menu li {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 8px;
+  }
+
+  .admin-menu li a {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  /* 공지 작성 폼 */
+  .admin-container textarea,
+  .admin-container input[type="text"] {
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .admin-container form > div {
+    margin-top: 12px;
+  }
+
+  .admin-container form > div:last-child {
+    display: flex;
+    justify-content: center;
+  }
+
+  .admin-container button[type="submit"] {
+    width: 100%;
+    max-width: 300px;
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* 테이블 반응형 */
+  .admin-container table,
+  .admin-container thead,
+  .admin-container tbody,
+  .admin-container th,
+  .admin-container td,
+  .admin-container tr {
+    display: block;
+  }
+
+  .admin-container thead {
+    display: none;
+  }
+
+  .admin-container tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .admin-container td {
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .admin-container td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+    color: #12284c;
+    white-space: nowrap;
+  }
+
+  /* 드롭다운(select) */
+  .admin-container select {
+    width: 100%;
+    max-width: 200px;
+    font-size: 14px;
+    margin-bottom: 6px;
+    box-sizing: border-box;
+  }
+}
+
+
+
+

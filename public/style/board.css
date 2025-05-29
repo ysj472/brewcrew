@@ -1,0 +1,536 @@
+/* ===== 작성 영역 전체 ===== */
+.write-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  margin-top: 1rem;
+}
+
+/* 게시판, 말머리 선택 영역 */
+.select-options {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.select-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.select-group label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.select-group select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* 제목 입력 */
+.write-form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.write-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.write-form-group input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Quill 에디터 영역 */
+#editor-container {
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* 버튼 영역 */
+.button-session {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button-session button {
+  padding: 8px 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-session button[type="submit"] {
+  background-color: #12284b;
+  color: white;
+}
+
+.button-session button#cancelBtn {
+  background-color: #ccc;
+  color: #000;
+}
+
+
+/* ===== 게시글 상세 컨테이너 ===== */
+.post-container {
+  max-width: 1000px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* ===== 상단 메타 정보 ===== */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  margin-right: 0.4rem;
+}
+
+.post-meta-update,
+.post-meta-delete {
+  cursor: pointer;
+  color: #d33;
+  font-weight: bold;
+}
+
+/* ===== 제목 ===== */
+.post-title {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+/* ===== 작성자 정보 ===== */
+.post-author {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.author-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+
+
+.profile-box a {
+  display: block;
+  margin: 4px 0;
+  color: #12284b;
+  font-weight: 500;
+}
+
+/* ===== 본문 ===== */
+.post-content {
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  font-size: 1rem;
+  color: #222;
+}
+
+/* ===== 추천 / 비추천 ===== */
+.vote-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.vote-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.vote-btn.poten {
+  background-color: #ffc52f;
+  color: #12284b;
+}
+
+.vote-btn.bangchul {
+  background-color: #ddd;
+  color: #000;
+}
+
+/* ===== 네비게이션 버튼 ===== */
+.nav-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 50px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.nav-buttons button {
+  padding: 6px 12px;
+  background-color: #12284b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* ===== 댓글 ===== */
+.comment-section {
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+#comment-list {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.comment-form textarea {
+  resize: vertical;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.comment-form button {
+  align-self: flex-end;
+  padding: 6px 12px;
+  background-color: #ffc52f;
+  color: #12284b;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 댓글 전체 박스 */
+#comment-list {
+  margin-top: 1rem;
+}
+
+/* 댓글 항목 */
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+}
+
+/* 댓글 상단 (프로필 + 닉네임 + 시간) */
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* 프로필 이미지 */
+.comment-profile-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 100px;
+  border: 1px solid #ccc;
+}
+
+/* 닉네임 스타일 */
+.comment-author {
+  font-weight: bold;
+  color: #12284b;
+}
+
+/* 시간 */
+.comment-time {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* 수정/삭제 버튼 */
+.comment-meta-actions {
+  margin-left: auto;
+}
+.comment-meta-actions button {
+  margin-left: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  border: 1px solid #999;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* 댓글 본문 */
+.comment-body {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+/* 수정 폼 */
+.edit-comment-form {
+  margin-top: 0.5rem;
+}
+.edit-comment-form textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  resize: vertical;
+}
+.edit-comment-form button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  background-color: #12284b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ===== 프로필 팝업 ===== */
+.post-author {
+  position: relative; /* 기준 요소 */
+  display: inline-block;
+}
+
+.nickname {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.profile-box {
+  position: absolute;
+  top: calc(100% + 6px); /* 닉네임 아래 살짝 띄움 */
+  left: 0;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  z-index: 999;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .post-container {
+    padding: 1rem;
+    font-size: 15px;
+  }
+
+  .post-title {
+    font-size: 20px;
+    margin-top: 1rem;
+    word-break: break-word;
+  }
+
+  .post-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+
+  .author-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  .nickname {
+    font-weight: 600;
+  }
+
+  .profile-box {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: max-content;
+    background: #fff;
+    padding: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    border-radius: 6px;
+  }
+
+  .post-content {
+    line-height: 1.7;
+    word-break: break-word;
+  }
+
+  .post-content img,
+  .post-content iframe,
+  .post-content video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .vote-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .vote-btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 16px;
+  }
+
+  .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .nav-buttons button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 15px;
+  }
+
+  .comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .comment-form textarea {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+    resize: vertical;
+  }
+
+  #rippleBtn {
+    padding: 10px;
+    font-size: 15px;
+    width: 100%;
+    background-color: #12284b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+
+    .write-content {
+    padding: 1rem;
+    font-size: 15px;
+  }
+
+  .select-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .select-group {
+    width: 100%;
+  }
+
+  .select-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+
+  .select-group select {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 15px;
+  }
+
+  .write-form-group {
+    margin-top: 1rem;
+  }
+
+  .write-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+
+  .write-form-group input[type="text"] {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 15px;
+  }
+
+  #editor-container {
+    height: 300px; /* 모바일에서도 충분히 사용 가능한 높이 */
+    max-width: 100%;
+    font-size: 15px;
+    background-color: #fff;
+  }
+
+  .button-session {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .button-session button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #12284b;
+    color: white;
+    border: none;
+  }
+
+  .button-session button:hover {
+    background-color: #0d1f38;
+  }
+
+  #cancelBtn {
+    background-color: #ccc;
+    color: #333;
+  }
+
+  #cancelBtn:hover {
+    background-color: #bbb;
+  }
+}
+
+
+
+
+
+

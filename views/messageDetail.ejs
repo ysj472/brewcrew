@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/style/message.css"> 
+<div style="height: 500px;">
+    <div id="message-detail-container">
+        <h3>쪽지 상세</h3>
+        <div class="message-detail-box">
+            <p><strong>보낸사람:</strong> <%= message.sender_nickname %></p>
+            <p><strong>제목:</strong> <%= message.title %></p>
+            <p><strong>내용:</strong> </p>
+            <p><%= message.message.replace(/\n/g, '<br>') %></p> <!-- 줄바꿈 처리 -->
+            <p><strong>작성일:</strong> <%= new Date(message.created_at).toLocaleString('ko-KR', { hour12: false }) %></p>
+        </div>
+
+        <div class="message-actions">
+            <button id="replyBtn" onclick="openReplyPopup('<%= message.sender_nickname %>', '<%= message.sender_id %>', '<%= message.title %>')">답장</button>
+            <form id="deleteForm" action="/deleteMessage" method="POST" style="display:inline;">
+                <input type="hidden" name="messageId" value="<%= message.id %>">
+                <button type="submit" id="deleteBtn">삭제</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
+<script src="/js/script.js"></script>

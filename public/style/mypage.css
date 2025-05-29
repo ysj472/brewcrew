@@ -1,0 +1,295 @@
+/* ===== 마이페이지 전체 컨테이너 ===== */
+.mypage-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.mypage-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #12284b;
+}
+
+.sub-text {
+  text-align: center;
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+/* ===== 프로필 영역 ===== */
+.profile {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-img-section {
+  text-align: center;
+}
+
+.profile-img-section img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.profile-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-details {
+  flex: 1;
+}
+
+.profile-details label {
+  font-weight: bold;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.profile-details input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ===== 비밀번호 변경 섹션 ===== */
+.change-password {
+  margin-top: 2rem;
+}
+
+.change-password h3 {
+  color: #12284b;
+  margin-bottom: 1rem;
+}
+
+.change-password label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.change-password input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ===== 버튼 ===== */
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.apply-btn {
+  background-color: #12284b;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+}
+
+.delete-btn {
+  background-color: #d33;
+}
+
+/* ===== 마이포스트 컨테이너 ===== */
+.content {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* ===== 테이블 ===== */
+.news-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.news-table th,
+.news-table td {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.news-table th {
+  background-color: #12284b;
+  color: white;
+}
+
+.news-table td a {
+  color: #12284b;
+  text-decoration: none;
+}
+
+.news-table td a:hover {
+  text-decoration: underline;
+}
+
+.comment-count {
+  margin-left: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: red;
+}
+
+/* ===== 수정/삭제 버튼 ===== */
+.news-table td button {
+  margin: 2px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.news-table td button:first-child {
+  background-color: #ffc52f;
+  color: #12284b;
+}
+
+.news-table td button:last-child {
+  background-color: #d33;
+  color: white;
+}
+
+/* ===== 페이지네이션 ===== */
+.number-content {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.pagination a {
+  margin: 0 4px;
+  padding: 6px 12px;
+  background-color: #eee;
+  border-radius: 4px;
+  color: #12284b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.pagination a.active {
+  background-color: #ffc52f;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .mypage-container {
+    padding: 1.2rem;
+    font-size: 15px;
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+  }
+
+  .profile-img-section img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .profile-btns {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .profile-details {
+    width: 100%;
+  }
+
+  .profile-details p,
+  .profile-details label {
+    font-size: 15px;
+  }
+
+  .profile-details input {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 15px;
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .change-password {
+    margin-top: 2rem;
+  }
+
+  .change-password label {
+    font-weight: bold;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .change-password input {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 15px;
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 2rem;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .apply-btn {
+    background-color: #12284b;
+    color: white;
+  }
+
+  .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+  }
+}

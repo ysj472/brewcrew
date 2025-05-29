@@ -1,0 +1,94 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/style/mypage.css">
+<div class="mypage-container">
+  <h2>프로필 수정</h2>
+  <p class="sub-text">네이버처럼 프로필 사진과 닉네임을 변경할 수 있습니다.</p>
+
+  <!-- 프로필 정보 -->
+  <form id="editProfileForm" method="POST" action="/updateProfile" enctype="multipart/form-data">
+    <div class="profile">
+      <!-- 프로필 사진 -->
+      <div class="profile-img-section">
+        <img id="editProfilePicPreview" src="<%= brewers_profile_pic %>" alt="프로필 사진">
+        <div class="profile-btns">
+          <label for="editProfilePic" class="btn">사진 변경</label>
+          <input type="file" id="editProfilePic" name="editProfilePic" accept="image/*" style="display: none;">
+          <button type="button" class="btn delete-btn" id="deleteAccountBtn">회원탈퇴</button>
+        </div>
+      </div>
+
+      <!-- 닉네임 & 계정 정보 -->
+      <div class="profile-details">
+        <p><strong>아이디:</strong> <%= brewers_id %></p>
+        <label for="editNickname">닉네임</label>
+        <input type="text" id="editNickname" name="editNickname" value="<%= brewers_nickname %>">
+        <p><strong>가입일:</strong> <%= brewers_created_at %></p>
+      </div>
+    </div>
+
+    <!-- 비밀번호 변경 -->
+    <div class="change-password">
+      <h3>비밀번호 변경</h3>
+      <label for="currentPassword">현재 비밀번호</label>
+      <input type="password" id="currentPassword" name="currentPassword">
+
+      <label for="newPassword">새 비밀번호</label>
+      <input type="password" id="newPassword" name="newPassword">
+
+      <label for="confirmPassword">새 비밀번호 확인</label>
+      <input type="password" id="confirmPassword" name="confirmPassword">
+    </div>
+
+    <!-- 버튼 -->
+    <div class="btn-group">
+      <button type="submit" class="btn apply-btn">적용</button>
+      <button type="reset" class="btn cancel-btn">취소</button>
+    </div>
+  </form>
+</div>
+<%- include('partials/footer') %>
+<script src="/js/script.js"></script>
+<script>
+  /* 마이페이지 프로필 변경 */
+document.getElementById('editProfilePic').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!allowedTypes.includes(file.type.toLowerCase())) {
+        alert('⚠️ 허용되지 않은 파일 형식입니다.\nPNG, JPG, JPEG 형식만 등록 가능합니다.');
+        e.target.value = ''; // 파일 초기화
+        return;
+    }
+
+    // 미리보기
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const preview = document.getElementById('editProfilePicPreview');
+        preview.src = event.target.result;
+        preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+});
+
+document.getElementById('deleteAccountBtn').addEventListener('click', function () {
+  if (confirm("정말 탈퇴하시겠습니까? 탈퇴 시 재가입이 불가능합니다.")) {
+    fetch('/deleteAccount', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ brewers_id: "<%= brewers_id %>" })
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.success) {
+        alert("탈퇴가 완료되었습니다.");
+        window.location.href = "/";
+      } else {
+        alert("탈퇴 중 오류가 발생했습니다.");
+      }
+    });
+  }
+});
+</script>
+

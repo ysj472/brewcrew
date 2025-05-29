@@ -1,0 +1,90 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/style/boardlist.css">
+<div class="content">
+    <h2>■ 내가 작성한 게시글</h2>
+
+    <table class="news-table">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>게시판</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (posts.length > 0) { %>
+                <% posts.forEach((post, index) => { %>
+                    <tr class="clickable-row" data-href="/boardDetail?id=<%= post.id %>">
+                        <td data-label="번호"><%= totalPosts - (currentPage - 1) * postsPerPage - index %></td>
+                        <td data-label="게시판"><%= post.board %></td>
+                        <td data-label="제목">
+                            <a href="/boardDetail?id=<%= post.id %>">
+                                <%= post.title %>
+                                <% if (post.comment_count > 0) { %>
+                                    <span class="comment-count" style="color: red;">(<%= post.comment_count %>)</span>
+                                <% } %>
+                                <% if (post.thumbnail_image) { %> 🖼️ <% } %>
+                                <% if (post.thumbnail_video) { %> 🎬 <% } %>
+                            </a>
+                        </td>
+                        <td data-label="작성일"><%= new Date(post.created_at).toLocaleDateString('ko-KR') %></td>
+                        <td data-label="조회수"><%= post.views %></td>
+                        <td data-label="관리">
+                            <button onclick="editPost('<%= post.id %>')">수정</button>
+                            <button onclick="deletePost('<%= post.id %>')">삭제</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+            <tr class="no-post-row">
+                <td colspan="6" class="no-post-cell">등록된 게시글이 없습니다.</td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <!-- 페이지네이션 -->
+    <div class="number-content">
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+                <a href="/myPosts?page=<%= currentPage - 1 %>">&#8592; 이전</a>
+            <% } %>
+
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/myPosts?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+
+            <% if (currentPage < totalPages) { %>
+                <a href="/myPosts?page=<%= currentPage + 1 %>">다음 &#8594;</a>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script>
+function editPost(id) {
+    window.location.href = '/boardEdit?id=' + id;
+}
+
+function deletePost(id) {
+    if (confirm('정말 삭제하시겠습니까?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/boardDelete';
+        
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'postId';
+        input.value = id;
+        
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+<%- include('partials/footer') %>
+<script src="/js/page.js"></script>

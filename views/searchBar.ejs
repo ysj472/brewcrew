@@ -1,0 +1,48 @@
+<div class="search-container">
+    <div class="search-input-wrapper">
+        <input type="text" id="searchInput" placeholder="검색어 입력">
+        <i class="search-icon" onclick="searchPosts()">🔍</i>
+    </div>
+    <select id="searchType">
+        <option value="title_content">제목+내용</option>
+        <option value="title">제목</option>
+        <option value="writer_id">아이디</option>
+        <option value="nickname">닉네임</option>
+        <option value="category">말머리</option>
+    </select>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById("searchInput");
+      const searchType = document.getElementById("searchType");
+  
+      if (searchInput) {
+        // ⌨️ 엔터 키 눌렀을 때 검색 실행
+        searchInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            searchPosts(); // 기존 검색 함수 호출
+          }
+        });
+      }
+    });
+  
+    function searchPosts() {
+      const keyword = document.getElementById("searchInput").value.trim();
+      const type = document.getElementById("searchType").value;
+  
+      if (!keyword) {
+        alert("검색어를 입력하세요.");
+        return;
+      }
+  
+      // 검색 결과 페이지로 이동
+      const url =
+        type === "title_content"
+          ? `/search?keyword=${encodeURIComponent(keyword)}`
+          : `/boardSearch?type=${type}&keyword=${encodeURIComponent(keyword)}&page=1`;
+  
+      window.location.href = url;
+    }
+  </script>
+  

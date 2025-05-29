@@ -1,0 +1,268 @@
+/* ===== 게시판 콘텐츠 ===== */
+.content {
+  max-width: 1000px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* ===== 테이블 스타일 ===== */
+.news-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse; /* ✅ 테두리 겹침 제거 */
+  border-spacing: 0;          /* ✅ 셀 사이 여백 제거 */
+}
+
+.news-table th, .news-table td {
+  border: none;
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+}
+
+.news-table th:nth-child(1), .news-table td:nth-child(1) { width: 8%; }   /* 번호 */
+.news-table th:nth-child(2), .news-table td:nth-child(2) { width: 8%; }  /* 말머리 */
+.news-table th:nth-child(3), .news-table td:nth-child(3) { width: 45%; }  /* 제목 (넓게) */
+.news-table th:nth-child(4), .news-table td:nth-child(4) { width: 15%; }  /* 닉네임 */
+.news-table th:nth-child(5), .news-table td:nth-child(5) { width: 14%; }  /* 작성일 */
+.news-table th:nth-child(6), .news-table td:nth-child(6) { width: 10%; }  /* 조회수 */
+
+.news-table th {
+  background-color: #12284b;
+  color: white;
+  font-weight: bold;
+  font-weight: 500;
+}
+
+.news-table td a {
+  color: #12284b;
+  font-weight: 500;
+}
+
+/* ===== 프로필 ===== */
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.profile-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+/* ===== 댓글 수 강조 ===== */
+.comment-count {
+  margin-left: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* ===== 프로필 박스 ===== */
+.profile-box {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  z-index: 1000;
+  border-radius: 6px;
+  margin-top: 0.3rem;
+}
+
+.profile-box a {
+  display: block;
+  margin: 4px 0;
+  font-size: 0.85rem;
+  color: #12284b;
+}
+
+/* ===== 페이지네이션 ===== */
+.number-content {
+  max-width: 1000px;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-between; /* ➜ 버튼은 오른쪽, 페이지 번호는 중앙 여백 확보 */
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.pagination {
+  margin: 0 auto;               /* ➜ 가운데 정렬 */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pagination a {
+  margin: 0 4px;
+  padding: 6px 10px;
+  background-color: #eee;
+  color: #12284b;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.pagination a.active {
+  background-color: #ffc52f;
+  font-weight: bold;
+}
+
+#writeBtn {
+  padding: 8px 16px;
+  background-color: #12284b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;  /* ✅ 오른쪽 정렬 */
+}
+
+.news-table td[data-label="관리"] button {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #12284b;
+  background-color: #fff;
+  color: #12284b;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.news-table td[data-label="관리"] button:hover {
+  background-color: #12284b;
+  color: #fff;
+}
+
+/* 게시판 종류 가로 정렬 */
+.news-table td {
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+}
+
+.news-table td::before {
+  content: attr(data-label);
+  font-weight: bold;
+  min-width: 70px;
+  color: #333;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .news-table {
+    display: block;
+    width: 100%;
+  }
+
+  .news-table thead {
+    display: none;
+  }
+
+  .news-table tbody {
+    display: block;
+  }
+
+  .news-table tr {
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .news-table td {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    font-size: 14px;
+    padding: 4px 0;
+    line-height: 1.4;
+  }
+
+  .news-table td[data-label="제목"] a {
+    white-space: nowrap;
+    overflow-wrap: anywhere;
+    text-overflow: initial;
+    display: block;
+  }
+
+    .news-table td[data-label="게시판"] {
+    flex-wrap: nowrap;
+    white-space: nowrap;      /* 줄바꿈 방지 */
+    text-overflow: ellipsis;
+  }
+
+  .news-table td[data-label="게시판"]::before {
+    flex-shrink: 0;
+    margin-right: 6px;
+  }
+
+  .news-table td[data-label="작성일"] {
+    white-space: nowrap;
+  }
+
+  .news-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    width: 80px;
+    flex-shrink: 0;
+    color: #12284b;
+    display: block;
+  }
+
+  .news-table td span.comment-count {
+    margin-left: 5px;
+    font-weight: bold;
+    color: red;
+  }
+
+  .profile-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .profile-img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  .nickname {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .news-table td.no-post-cell {
+    display: block !important;
+    all: unset; /* ✅ 모든 상속 스타일 제거 */
+    font-size: 15px;
+    padding: 1.5rem;
+    white-space: normal;
+    text-align: center;
+    word-break: keep-all;
+    line-height: 1.6;
+  }
+
+  .news-table tr.no-post-row {
+    display: block;
+    border: none;
+    background: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+

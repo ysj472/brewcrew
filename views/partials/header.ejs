@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLB 뉴스</title>
+    <link rel="stylesheet" href="/style/header-footer.css">
+    <link rel="stylesheet" href="/style/styles.css">      
+    <link rel="stylesheet" href="/style/mobile.css">  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar-container">
+        <div class="navbar">
+            <div class="auth-buttons">
+                <div id="loginSession-button">
+                    <% if(brewers_id) { %>
+                        <button id="loginBtn" onclick="window.location.href='/myPage'">마이페이지</button>
+                    <button id="loginBtn" onclick="window.location.href='/logout'">로그아웃</button>
+                    <%} else { %>
+                    <button id="loginBtn" onclick="window.location.href='/login'">로그인</button>
+                    <button id="loginBtn" onclick="window.location.href='/register'">회원가입</button>
+                    <% } %>
+                </div>
+                <a href="/main" class="navbar-title">
+                    Brewꓘrew
+                </a>
+                <div class="search-bar">
+                    <form action="/search" method="GET" class="search-bar">
+                        <input type="text" name="keyword" placeholder="검색어를 입력하세요..." required>
+                        <button type="submit">검색</button>
+                    </form>                
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="sidebar-container">
+    <div class="sidebar">
+        <a href="/brewers" class="<%= currentPath.startsWith('/brewers') ? 'active' : '' %>">밀워키게시판</a>
+        <a href="/mlb" class="<%= currentPath.startsWith('/mlb') ? 'active' : '' %>">타팀게시판</a>
+        <a href="/free" class="<%= currentPath.startsWith('/free') ? 'active' : '' %>">자유게시판</a>
+        <a href="https://www.mlb.com/brewers/roster/40-man">40인 로스터</a>
+        <div class="permanent-wrapper">
+            <a class="permanent-number">영구결번</a> <!-- 영구결번 메뉴 추가 -->
+            <div class="circle-buttons">
+                <a href="https://baseballhall.org/hall-of-famers/selig-bud" class="circle">1</a>
+                <a href="https://www.baseball-reference.com/players/m/molitpa01.shtml" class="circle">4</a>
+                <a href="https://www.baseball-reference.com/players/y/yountro01.shtml" class="circle">19</a>
+                <a href="https://www.baseball-reference.com/players/f/fingero01.shtml" class="circle">34</a>
+                <a href="https://www.baseball-reference.com/players/r/robinja02.shtml" class="circle">42</a>
+                <a href="https://www.baseball-reference.com/players/a/aaronha01.shtml" class="circle">44</a>
+            </div>
+        </div>    
+        <% if(brewers_id) { %>
+                <a href="/myPosts" class="<%= currentPath.startsWith('/myPosts') ? 'active' : '' %>">작성글
+        <% if (newCommentsCount > 0) { %>
+            <span class="alert-badge"><%= newCommentsCount %></span>
+        <% } %>
+        </a>
+        <a href="/message" class="<%= currentPath.startsWith('/message') ? 'active' : '' %>">쪽지함
+        <% if (newMessagesCount > 0) { %>
+            <span class="alert-badge"><%= newMessagesCount %></span>
+        <% } %>
+        </a>
+        <% } %>
+        <% if (brewers_id && (brewers_role === 'admin' || brewers_role === 'manager')) { %>
+            <a href="/admin" class="admin-menu <%= currentPath.startsWith('/admin') ? 'active' : '' %>">관리자 페이지</a>
+        <% } %>
+    </div>
+</div>

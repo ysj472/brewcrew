@@ -1,0 +1,5 @@
+# node_modules 제외
+node_modules/
+
+# pem 키 파일 제외
+*.pem

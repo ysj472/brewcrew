@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/style/admin.css">
+<h2>공지 작성</h2>
+<div class="admin-container">
+  <form action="/admin/notices" method="POST">
+    <div>
+      <label for="title">제목</label><br>
+      <input type="text" id="title" name="title" required style="width: 100%;">
+    </div>
+
+    <div style="margin-top: 10px;">
+      <label for="content">내용</label><br>
+      <textarea id="content" name="content" rows="10" required style="width: 100%;"></textarea>
+    </div>
+
+    <div style="margin-top: 10px; display: flex; justify-content: center;">
+      <button type="submit">공지 등록</button>
+    </div>
+  </form>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,85 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/style/boardlist.css">
+<div class="content">
+  <h2>
+    "<%= keyword %>" 검색 결과 
+    <% if (type === 'title') { %>(제목)<% } %>
+    <% if (type === 'title_content') { %>(제목+내용)<% } %>
+    <% if (type === 'writer_id') { %>(아이디)<% } %>
+    <% if (type === 'nickname') { %>(닉네임)<% } %>
+    <% if (type === 'category') { %>(말머리)<% } %>
+  </h2>  
+
+  <table class="news-table">
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>게시판</th>
+        <th>제목</th>
+        <th>닉네임</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (posts.length > 0) { %>
+        <% posts.forEach((post, index) => { %>
+          <tr class="clickable-row" data-href="/boardDetail?id=<%= post.id %>">
+            <td data-label="번호"><%= posts.length - index %></td>
+            <td data-label="게시판"><%= post.board %></td>
+            <td data-label="제목">
+              <a href="/boardDetail?id=<%= post.id %>"><%= post.title.length > 60 ? post.title.slice(0, 60) + '...' : post.title %>
+              </a>
+              <% if (post.comment_count > 0) { %>
+                <span class="comment-count" style="color: red;">(<%= post.comment_count %>)</span>
+              <% } %>
+            </td>
+            <td>
+              <div class="profile-wrapper">
+                <img src="<%= post.brewers_profile_pic || '/img/default-profile.png' %>" class="profile-img" />
+                <a href="#" class="nickname" data-username="<%= post.brewers_id %>"><%= post.brewers_nickname %></a>
+              </div>
+              <div class="profile-box">
+                <a class="profileBtn" data-username="<%= post.brewers_id %>">프로필 보기</a>
+                <a class="listBtn" href="/userList?id=<%= post.brewers_id %>">게시글 보기</a>
+                <% if (brewers_id && brewers_id !== post.brewers_id) { %>
+                  <a class="send-message" data-username="<%= post.brewers_nickname %>" data-userid="<%= post.brewers_id %>">쪽지 보내기</a>
+                <% } %>
+              </div>              
+            </td>
+            <td data-label="작성일"><%= new Date(post.created_at).toLocaleDateString('ko-KR') %></td>
+            <td data-label="조회수"><%= post.views %></td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+            <tr class="no-post-row">
+                <td colspan="6" class="no-post-cell">등록된 게시글이 없습니다.</td>
+            </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<%-include('searchBar.ejs')%>
+<div class="number-content">
+  <div class="pagination">
+    <% if (page > 1) { %>
+      <a href="/<%= type === 'title_content' ? 'search' : 'boardSearch' %>?type=<%= type %>&keyword=<%= keyword %>&page=<%= page - 1 %>">&#8592; 이전</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="/<%= type === 'title_content' ? 'search' : 'boardSearch' %>?type=<%= type %>&keyword=<%= keyword %>&page=<%= i %>" class="<%= i === page ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+
+    <% if (page < totalPages) { %>
+      <a href="/<%= type === 'title_content' ? 'search' : 'boardSearch' %>?type=<%= type %>&keyword=<%= keyword %>&page=<%= page + 1 %>">다음 &#8594;</a>
+    <% } %>
+  </div>
+
+  <div>
+    <button id="writeBtn">글쓰기</button>
+  </div>
+</div>
+<%- include('partials/footer') %>
+<div id="profilePopup" class="profile-popup" style="display: none;"></div>
+<script src="/js/script.js"></script>
+<script src="/js/page.js"></script>

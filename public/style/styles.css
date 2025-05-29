@@ -1,0 +1,111 @@
+/* 본문 영역 (main-container 등) */
+.main-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* 뉴스/게시글 영역 */
+.latest-news, .popular {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.title-write h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 메인 뉴스 */
+.top-news {
+  display: flex;
+  gap: 1rem;
+}
+
+.top-news img {
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.news-content h1 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.news-content p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  max-height: 3em;                   /* 1.5 * 2줄 */
+}
+
+/* 서브 뉴스 */
+.small-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.small-news {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.small-news img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.small-news h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+/* 인기/최신/조회수 목록 */
+.popular-posts,
+.latest-posts,
+.see-posts {
+  margin-top: 1rem;
+}
+
+.popular h3,
+.latest-posts h3,
+.see-posts h3 {
+  font-size: 1.1rem;
+  border-bottom: 2px solid #12284b;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
+}
+
+.rank {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: #ffc52f;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+li {
+  margin-left: 0;
+  padding-left: 0;
+  word-break: break-word; /* 줄바꿈 강제 */
+}
+
+.clickable-card,
+.clickable-row {
+  cursor: pointer;
+}

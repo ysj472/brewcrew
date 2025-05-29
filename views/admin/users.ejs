@@ -1,0 +1,75 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/style/admin.css">
+<h2>회원 관리</h2>
+<div class="admin-container">
+  <table border="1">
+    <thead>
+      <tr>
+        <th>아이디</th>
+        <th>닉네임</th>
+        <th>권한</th>
+        <th>정지상태</th>
+        <th>조작</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.brewers_id %></td>
+          <td><%= user.brewers_nickname %></td>
+          <td><%= user.brewers_role %></td>
+          <td>
+            <% if (user.is_suspended) { %>
+              <span style="color:red;">정지됨</span>
+            <% } else { %>
+              정상
+            <% } %>
+          </td>
+          <td>
+            <% if (user.brewers_role !== 'admin') { %>
+              <!-- 권한 변경 -->
+              <form action="/admin/promote" method="POST" style="display:inline;">
+                <input type="hidden" name="brewers_id" value="<%= user.brewers_id %>">
+                <select name="role">
+                  <option value="user" <%= user.brewers_role === 'user' ? 'selected' : '' %>>user</option>
+                  <option value="manager" <%= user.brewers_role === 'manager' ? 'selected' : '' %>>manager</option>
+                </select>
+                <button type="submit">변경</button>
+              </form>
+
+              <!-- 정지/해제 -->
+              <form action="/admin/users/suspend" method="POST" style="display:inline;">
+                <input type="hidden" name="brewers_id" value="<%= user.brewers_id %>">
+
+                <% if (user.is_suspended) { %>
+                  <input type="hidden" name="action" value="unsuspend">
+                  <button type="submit">해제</button>
+                <% } else { %>
+                  <input type="hidden" name="action" value="suspend">
+                  <button type="submit">정지</button>
+                <% } %>
+              </form>
+            <% } else { %>
+              <em>관리자</em>
+            <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <!-- 페이지네이션 -->
+  <div class="pagination">
+    <% if (page > 1) { %>
+      <a href="?page=<%= page - 1 %>">이전</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="?page=<%= i %>" class="<%= i === page ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+
+    <% if (page < totalPages) { %>
+      <a href="?page=<%= page + 1 %>">다음</a>
+    <% } %>
+  </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,107 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/style/board.css">
+<div class="post-container" data-post-id="<%= post.id %>" data-my-id="<%= brewers_id || '' %>"> 
+    <div class="post-header">
+        <div>
+            <span class="post-meta"><%= post.board %></span>
+            <span class="post-meta"> | </span>
+            <span class="post-meta"><%= post.category %></span>
+            <span class="post-meta"> | </span>
+
+            <% if(brewers_id && brewers_id === post.brewers_id) { %>
+            <span class="post-meta-update" onclick="window.location.href='/boardEdit?id=<%= post.id %>'">수정</span>
+            <span class="post-meta"> | </span>
+            <span class="post-meta-delete" onclick="confirmDelete()">삭제</span>
+            <form id="deleteForm" action="/boardDelete" method="POST" style="display: none;">
+                <input type="hidden" name="postId" value="<%= post.id %>">
+            </form>
+            <% } %>
+        </div>
+        <span class="post-meta"><%= new Date(post.created_at).toLocaleString('ko-KR') %></span>
+    </div>
+
+    <h2 class="post-title"><%= post.title %></h2>
+
+    <div class="post-author" style="position: relative;">
+        <img src="<%= post.brewers_profile_pic %>" alt="프로필 사진" class="author-img">
+        <span class="profile-trigger nickname" data-userid="<%= post.brewers_id %>" data-username="<%= post.brewers_nickname %>">
+            <%= post.brewers_nickname %>
+        </span>
+          <!-- 프로필 박스 -->
+        <div class="profile-box">
+            <a class="profileBtn" data-username="<%= post.brewers_id %>">프로필 보기</a>
+            <a class="listBtn" href="/userList?id=<%= post.brewers_id %>">게시글 보기</a>
+            <% if (brewers_id && brewers_id !== post.brewers_id) { %>
+            <a href="#" class="send-message" data-username="<%= post.brewers_nickname %>" data-userid="<%= post.brewers_id %>">쪽지 보내기</a>
+            <% } %>
+        </div>
+    </div>    
+
+    <div class="post-content">
+        <%- post.content %>
+    </div>    
+
+    <% if (post.board !== '공지') { %>
+    <div class="vote-container">
+        <!-- 추천 버튼 -->
+        <button id="likeBtn" class="vote-btn poten" data-author="<%= post.brewers_id %>">
+            🔥 추천 <span id="postLikeCount"><%= post.likeCount %></span>
+        </button>
+
+        <!-- 비추천 버튼 -->
+        <button id="dislikeBtn" class="vote-btn bangchul" data-author="<%= post.brewers_id %>">
+            🚫 비추천
+        </button>
+    </div>
+    <% } %>  
+
+    <div class="nav-buttons">
+        <% if (prevPost) { %>
+            <button onclick="location.href='/boardDetail?id=<%= prevPost.id %>'">&lt; 이전 글</button>
+        <% } else { %>
+            <button disabled>&lt; 이전 글</button>
+        <% } %>
+    
+        <button onclick="history.back()">목록으로</button>
+    
+        <% if (nextPost) { %>
+            <button onclick="location.href='/boardDetail?id=<%= nextPost.id %>'">다음 글 &gt;</button>
+        <% } else { %>
+            <button disabled>다음 글 &gt;</button>
+        <% } %>
+    </div>    
+
+    <!-- 댓글 작성 -->
+    <div class="comment-section">
+        <h3 style="height: 35px;">댓글 <span id="comment-count">0</span> 개</h3>
+        <!-- 댓글 리스트 -->
+        <div id="comment-list">
+            
+        </div>
+        <!-- 댓글 작성 폼 -->
+        <% if (brewers_id) { %>
+        <form id="commentForm" class="comment-form">
+            <textarea name="comment" rows="2" placeholder="댓글을 작성하세요."></textarea>
+            <button type="submit" id="rippleBtn">등록</button>
+        </form>
+        <% } else { %>
+        <form id="commentForm" class="comment-form">
+            <textarea name="comment" rows="2" placeholder="댓글을 작성하려면 로그인이 필요합니다."></textarea>
+            <button type="submit" id="rippleBtn">등록</button>
+        </form>
+        <% } %>
+    </div>    
+</div>
+<%- include('partials/footer') %>
+<div id="profilePopup" class="profile-popup" style="display: none;"></div> 
+<script src="/js/script.js"></script>
+<script src="/js/post.js"></script>
+<script src="/js/ripple.js"></script>
+<script>
+    function confirmDelete() {
+      if (confirm("정말 삭제하시겠습니까?")) {
+        document.getElementById('deleteForm').submit();
+      }
+    }
+</script>
+   

@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/style/admin.css">
+<h2>신고 목록</h2>
+<div class="admin-container">
+  <table border="1">
+    <thead>
+      <tr>
+        <th>유형</th>
+        <th>대상 ID</th>
+        <th>신고자</th>
+        <th>사유</th>
+        <th>신고일</th>
+        <th>조치</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% reports.forEach(r => { %>
+        <tr>
+          <td><%= r.target_type %></td>
+          <td><%= r.target_id %></td>
+          <td><%= r.reporter_name %></td>
+          <td><%= r.reason %></td>
+          <td><%= r.created_at.toLocaleString() %></td>
+          <td>
+            <form action="/admin/reports/delete" method="POST" style="display:inline;">
+              <input type="hidden" name="target_type" value="<%= r.target_type %>">
+              <input type="hidden" name="target_id" value="<%= r.target_id %>">
+              <input type="hidden" name="report_id" value="<%= r.id %>">
+              <button type="submit">삭제</button>
+            </form>
+            <form action="/admin/reports/ignore" method="POST" style="display:inline;">
+              <input type="hidden" name="report_id" value="<%= r.id %>">
+              <button type="submit">무시</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/footer') %>
